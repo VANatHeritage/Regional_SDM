@@ -589,11 +589,13 @@ save(list = ls.save, file = paste0(model_run_name,".Rdata"), envir = environment
 
 # write model metadata to db
 db <- dbConnect(SQLite(),dbname=nm_db_file)  
-insert_values <- paste(model_run_name, ElementNames$Code, model_start_time, modeller, model_comp_name, r_version, model_comments, sep = "','")
+insert_values <- paste(model_run_name, ElementNames$Code, model_start_time, modeller, 
+                       model_comp_name, r_version, model_comments, sep = "','")
 SQLquery <- paste0("INSERT INTO tblModelRuns (modelRunName, CODE, modelBeginTime, modeller,
 modelCompName, rVersion, internalComments)
 VALUES
 ('",insert_values,"');")
 dbSendQuery(db, SQLquery) #dbExecute
+dbDisconnect(db)
 
 message(paste0("Saved rdata file: '", model_run_name , "'."))

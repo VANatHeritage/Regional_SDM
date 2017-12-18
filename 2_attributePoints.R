@@ -63,6 +63,7 @@ modType <- dbGetQuery(db, SQLQuery)$m
 
 SQLQuery <- paste0("SELECT gridName g FROM lkpEnvVars WHERE use_",modType," = 1;")
 gridlistSub <- dbGetQuery(db, SQLQuery)$g
+dbDisconnect(db)
 
 # get just names of grids (removes folder for temporal vars)
 justTheNames <- unlist(lapply(strsplit(names(gridlist), "/", fixed = TRUE), FUN = function(x) {x[length(x)]}))
@@ -129,4 +130,3 @@ rm(tv,tvDataYear,tvDataYear.s, yrs, closestYear, vals, pa)
 points_attributed@proj4string <- projInfo
 filename <- paste(code_name, "_att", sep="")
 writeOGR(points_attributed, ".", layer=paste(filename), driver="ESRI Shapefile", overwrite_layer=TRUE)
-
