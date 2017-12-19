@@ -8,7 +8,7 @@
 
 # set project folder and species code for this run
 project_folder <- "D:/SDM/Tobacco/"
-model_species <- "ammohens"
+model_species <- "panaquin_TEST"
 
 # path where you want to save model run scripts
 loc_scripts <- paste0(project_folder, "inputs/species/", model_species ,"/scripts")
@@ -65,12 +65,12 @@ run_SDM(
   loc_RDataOut = paste0(project_folder, "outputs/", model_species ,"/rdata"),
   loc_outRas = paste0(project_folder, "outputs/", model_species ,"/grids"),
   loc_outMetadata = paste0(project_folder, "outputs/", model_species ,"/metadata"),
-  model_comments = "Updated sp. occurrences.",
-  metaData_comments = "",
+  model_comments = "Testing systematic presence sampling/PA exclusion 3000m. Also removed canopy 2001 variables.",
+  metaData_comments = "Testing systematic presence sampling/PA exclusion 3000m. Also removed canopy 2001 variables.",
   modeller = "David Bucklin",
   add_vars = NULL,
   remove_vars = NULL,
-  prompt = FALSE
+  prompt = TRUE
 )
 
 #############################################################################
