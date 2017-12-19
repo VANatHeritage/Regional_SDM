@@ -10,7 +10,7 @@ library(rgdal)
 library(sp)
 library(rgeos)
 library(raster)
-library(NHsdm) # non-CRAN
+library(nhSDM) # non-CRAN
 
 ####
 # Assumptions
