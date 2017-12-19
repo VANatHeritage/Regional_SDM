@@ -311,10 +311,12 @@ dbDisconnect(db)
 # get the background shapefile
 backgShapef <- readOGR(dsn=loc_bkgPts, layer=nm_bkgPts)
 
+projInfo <- backgShapef@proj4string 
+
 # find coincident points ----
 #buffer the poly shapefile 30 m
+polybuff <- spTransform(presPolys, projInfo) # transform just to be sure
 polybuff <- gBuffer(presPolys, width = res(rast)[1] * 100) # set buffer to exclude background points to 100x raster resolution (3000m)
-rm(rast)
 
 # find points that fall within the buffered polygons, subset the sp object
 coincidentPts <- as.vector(gContains(polybuff, backgShapef, byid = TRUE))
