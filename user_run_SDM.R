@@ -7,11 +7,11 @@
 # which are used for new modeling runs
 
 # set project folder and species code for this run
-project_folder <- "D:/SDM/Tobacco/"
-model_species <- "panaquin_TEST"
+project_folder <- "D:/SDM/Tobacco"
+model_species <- "laniludo_TEST"
 
 # path where you want to save model run scripts
-loc_scripts <- paste0(project_folder, "inputs/species/", model_species ,"/scripts")
+loc_scripts <- paste0(project_folder, "/inputs/species/", model_species ,"/scripts")
 # github branch to download
 branch <- "dev"
 
@@ -45,34 +45,35 @@ source("run_SDM.R")
 # 3. add_vars: variables that are not part of the standard set for this species, which you wish to 
 #     include in the model run.
 # 4. remove_vars: variables that are part of the standard set for this species, which you wish to
-#     remove from the model run.
+#     remove (exclude) from the model run.
 
 # RUN A NEW MODEL (ALL STEPS 1-5)
 # If picking up from a previous run (after step 1), use Step 2-alt below
 # update the function arguments below as necessary, and run the function
-run_SDM(
+system.time(
+  run_SDM(
   begin_step = "1",
   loc_scripts = loc_scripts, 
-  loc_spPoly = paste0(project_folder, "inputs/species/", model_species ,"/polygon_data"),
-  nm_db_file = paste0(project_folder, "databases/VA_Spp/SDM_VA_Tracking_Modeling.sqlite"),
-  loc_bkgPts = paste0(project_folder, "inputs/background/tobacco"), 
+  loc_spPoly = paste0(project_folder, "/inputs/species/", model_species ,"/polygon_data"),
+  nm_db_file = paste0(project_folder, "/databases/VA_Spp/SDM_VA_Tracking_Modeling.sqlite"),
+  loc_bkgPts = paste0(project_folder, "/inputs/background/tobacco"), 
   nm_bkgPts = "tobacco_att",
-  loc_envVars = paste0(project_folder, "env_vars/Tobacco"),
-  loc_otherSpatial = paste0(project_folder, "other_spatial/shp"),
+  loc_envVars = paste0(project_folder, "/env_vars/Tobacco"),
+  loc_otherSpatial = paste0(project_folder, "/other_spatial/shp"),
   nm_refBoundaries = "StatesVA",
   nm_studyAreaExtent = "sdmVA_pred_20170131",
-  loc_spPts = paste0(project_folder, "inputs/species/", model_species ,"/point_data"),
-  loc_RDataOut = paste0(project_folder, "outputs/", model_species ,"/rdata"),
-  loc_outRas = paste0(project_folder, "outputs/", model_species ,"/grids"),
-  loc_outMetadata = paste0(project_folder, "outputs/", model_species ,"/metadata"),
+  loc_spPts = paste0(project_folder, "/inputs/species/", model_species ,"/point_data"),
+  loc_RDataOut = paste0(project_folder, "/outputs/", model_species ,"/rdata"),
+  loc_outRas = paste0(project_folder, "/outputs/", model_species ,"/grids"),
+  loc_outMetadata = paste0(project_folder, "/outputs/", model_species ,"/metadata"),
   model_comments = "Testing systematic presence sampling/PA exclusion 3000m. Also removed canopy 2001 variables.",
   metaData_comments = "Testing systematic presence sampling/PA exclusion 3000m. Also removed canopy 2001 variables.",
   modeller = "David Bucklin",
   add_vars = NULL,
   remove_vars = NULL,
-  prompt = TRUE
+  prompt = FALSE
 )
-
+)
 #############################################################################
 #############################################################################
 #############################################################################
@@ -95,13 +96,13 @@ run_SDM(
 # that was specified for the original model run. 
 
 # set project folder and species code for this run
-project_folder <- "D:/SDM/Tobacco/"
+project_folder <- "D:/SDM/Tobacco"
 model_species <- "glypmuhl"
 # set model rdata, if starting at step 4 or later
 # model_rdata <- "speciescode_20170101_123456"
 
 # path where you want to save model run scripts
-loc_scripts <- paste0(project_folder, "inputs/species/", model_species ,"/scripts")
+loc_scripts <- paste0(project_folder, "/inputs/species/", model_species ,"/scripts")
 
 # this downloads latest scripts from GitHub (you can save the 'get_scripts.R' 
 # file anywhere on your computer, so you don't have to change the path)
@@ -122,7 +123,7 @@ source("run_SDM.R")
 run_SDM(
   # loc_scripts = loc_scripts, # if script location is changed, make sure this is set
   begin_step = "5",
-  loc_RDataOut = paste0(project_folder, "outputs/", model_species ,"/rdata"),
+  loc_RDataOut = paste0(project_folder, "/outputs/", model_species ,"/rdata"),
   model_rdata = model_rdata, # need to provide this if picking up after step 3, otherwise leave it out
   # model_comments = "Updated model comment.",
   # metaData_comments = "Updated metadata comment.",
