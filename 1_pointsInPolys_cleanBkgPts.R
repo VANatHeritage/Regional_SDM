@@ -316,7 +316,7 @@ projInfo <- backgShapef@proj4string
 # find coincident points ----
 #buffer the poly shapefile 30 m
 polybuff <- spTransform(presPolys, projInfo) # transform just to be sure
-polybuff <- gBuffer(presPolys, width = res(rast)[1] * 100) # set buffer to exclude background points to 100x raster resolution (3000m)
+polybuff <- gBuffer(polybuff, width = res(rast)[1] * 100) # set buffer to exclude background points to 100x raster resolution (3000m)
 
 # find points that fall within the buffered polygons, subset the sp object
 coincidentPts <- as.vector(gContains(polybuff, backgShapef, byid = TRUE))
