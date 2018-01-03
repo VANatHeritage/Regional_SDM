@@ -51,6 +51,7 @@ fileNm <- paste(loc_outRas, "/", model_run_name ,".tif", sep = "")
 # use parallel processing if packages installed
 if (all(c("snow","parallel") %in% installed.packages())) {
   try({
+    cat("Using multi-core processing...\n")
     beginCluster(type = "SOCK")
     outRas <- clusterR(envStack, predict, args = list(model=rf.full, type = "prob", index = 2), verbose = T)
     writeRaster(outRas, filename = fileNm, format = "GTiff", overwrite = TRUE)

@@ -81,6 +81,9 @@ for (d in 1:length(presPolys$OBSDATE)) {
 desiredCols <- c(desiredCols, "date")
 presPolys <- presPolys[desiredCols]
 # presPolys <- disaggregate(presPolys) # this could be used to explode poly if desired
+# NOTE: THIS NEW METHOD ASSUMES 1 polygon per Source Feature 
+# (only multis are Source features that happened to be split in editing, which will remain multis)
+# EO_ID_ST should be attributed (could automate in future with group_polys)
 
 # SKIP THIS GO STRAIGHT TO RA defs
     #get projection info for later

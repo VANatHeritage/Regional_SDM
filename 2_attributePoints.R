@@ -23,7 +23,7 @@ raslist <- list.files(pattern = ".tif$", recursive = TRUE)
 # if using native R rasters, use this line
 #raslist <- list.files(pattern = ".grd$")
 
-# find temporal vars (placed in subfolders)
+# find temporal vars (placed in subfolders [with naming system %variable_group%_%year%])
 raslist.t <- raslist[grep("/",raslist,fixed = TRUE)]
 # exclude temporal vars, for the moment
 # raslist <- raslist[-grep("/",raslist,fixed = TRUE)]
@@ -31,10 +31,6 @@ raslist.t <- raslist[grep("/",raslist,fixed = TRUE)]
 gridlist <- as.list(paste(loc_envVars,raslist,sep = "/"))
 nm <- substr(raslist,1,nchar(raslist) - 4)
 names(gridlist) <- nm
-
-# check to make sure there are no names greater than 10 chars
-nmLen <- unlist(lapply(nm, nchar))
-max(nmLen) # if this result is greater than 10, you've got a renegade
 
 # Set working directory to the random points location
 setwd(loc_spPts)
@@ -67,6 +63,10 @@ dbDisconnect(db)
 
 # get just names of grids (removes folder for temporal vars)
 justTheNames <- unlist(lapply(strsplit(names(gridlist), "/", fixed = TRUE), FUN = function(x) {x[length(x)]}))
+
+# check to make sure there are no names greater than 10 chars
+nmLen <- unlist(lapply(justTheNames, nchar))
+max(nmLen) # if this result is greater than 10, you've got a renegade
 
 ## account for add/remove vars
 if (!is.null(add_vars)) {
