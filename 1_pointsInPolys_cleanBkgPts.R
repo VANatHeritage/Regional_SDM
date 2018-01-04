@@ -146,6 +146,7 @@ presPolys <- presPolys[desiredCols]
     # att.pt.2$finalSampNum <- ifelse(att.pt.2$PolySampNum < att.pt.2$minSamps,
     #                                 att.pt.2$minSamps,
     #                                 att.pt.2$PolySampNum)
+    # shp_expl2 <- merge(shp_expl, att.pt.2[,c("expl_id", "finalSampNum")], by.x = "EXPL_ID", by.y = "expl_id") # get finalSampNum
 # end skip
 
 # set up ra column for merge
@@ -155,6 +156,7 @@ presPolys$aream2 <- area(presPolys)
 presPolys$PolySampNum <- round(400*((2/(1+exp(-(presPolys$aream2/900+1)*0.004)))-1))
 EObyRA <- data.frame(ra = c("very high", "high", "medium", "low", "very low"), minSamps = c(5,4,3,2,1))
 
+# QC step: are any records attributed with values other than these?
 if(!all(presPolys$ra %in% EObyRA$ra)) {
     stop("at least one record is not attributed with RA appropriately")
   } else {
@@ -167,16 +169,15 @@ presPolys$finalSampNum <- ifelse(presPolys$PolySampNum < presPolys$minSamps,
                                  presPolys$minSamps,
                                  presPolys$PolySampNum)
 
-
 # TODO: remove extra tables and merging...just use shp_expl SPDF
 ### systematic sampling testing
 # get one template raster
 rast <- raster::raster(list.files(loc_envVars, pattern = ".tif$", full.names = T)[1])
-# shp_expl2 <- merge(shp_expl, att.pt.2[,c("expl_id", "finalSampNum")], by.x = "EXPL_ID", by.y = "expl_id") # get finalSampNum
+# pg <- poly_group(presPolys, 1000, union = TRUE) # could be used to group and union polygons by distance apart; finalSampNum would have to be re-calc
 ps <- poly_samp(presPolys, rast = rast, num.samps = presPolys$finalSampNum, 
-                force.min = TRUE) # no replacement unless necessary- force.min duplicate points until num.samps is met
-# ps <- poly_samp(shp_expl2, rast = rast, num.samps = shp_expl2$finalSampNum, 
-                # replace = TRUE) # equivalent of old routine, but samples relative to cells intersecting polygons
+                force.min = TRUE) # no replacement unless necessary - force.min duplicate points until num.samps is met
+# ps <- poly_samp(presPolys, rast = rast, num.samps = presPolys$finalSampNum, 
+#                replace = TRUE) # equivalent of old routine
 
 # write clean polygons
 presPolys$poly.id <- row.names(presPolys)
