@@ -125,7 +125,7 @@ if (length(tv) > 0) {
   
   points_attributed <- pa[-grep(".", names(pa), fixed = TRUE)]
 }
-rm(tv,tvDataYear,tvDataYear.s, yrs, closestYear, vals, pa)
+suppressWarnings(rm(tv,tvDataYear,tvDataYear.s, yrs, closestYear, vals, pa))
 
 # write it out ----
 # apply projection info
