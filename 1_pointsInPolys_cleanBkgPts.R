@@ -263,9 +263,9 @@ backgShapef <- readOGR(dsn=loc_bkgPts, layer=nm_bkgPts)
 projInfo <- backgShapef@proj4string
 
 # find coincident points ----
-#buffer the poly shapefile 30 m
+#buffer the poly shapefile 5000 m
 polybuff <- spTransform(presPolys, projInfo) # transform just to be sure
-polybuff <- gBuffer(polybuff, width = 30)
+polybuff <- gBuffer(polybuff, width = 5000)
 
 # find points that fall within the buffered polygons, subset the sp object
 coincidentPts <- gContains(polybuff, backgShapef, byid = TRUE)
