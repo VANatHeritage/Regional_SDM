@@ -44,6 +44,8 @@ names(fullL) <- stackOrder
 rm(rs,rs1)
 
 envStack <- stack(fullL)
+msk <- raster("D:/SDM/Tobacco/other_spatial/raster/surfacekarst_mask_3km.tif")
+envStack <- mask(envStack, mask = msk)
 
 # run prediction ----
 fileNm <- paste(loc_outRas, "/", model_run_name ,".tif", sep = "")
