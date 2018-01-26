@@ -45,7 +45,9 @@ rm(rs,rs1)
 
 envStack <- stack(fullL)
 msk <- raster("D:/SDM/Tobacco/other_spatial/raster/surfacekarst_mask_3km.tif")
-envStack <- mask(envStack, mask = msk)
+beginCluster(type = "SOCK")
+envStack <- clusterR(envStack, mask, args = list(mask = msk))
+endCluster()
 
 # run prediction ----
 fileNm <- paste(loc_outRas, "/", model_run_name ,".tif", sep = "")
