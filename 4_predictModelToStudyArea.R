@@ -44,13 +44,9 @@ names(fullL) <- stackOrder
 rm(rs,rs1)
 
 envStack <- stack(fullL)
-msk <- raster("D:/SDM/Tobacco/other_spatial/raster/surfacekarst_mask_3km.tif")
-beginCluster(type = "SOCK")
-envStack <- clusterR(envStack, mask, args = list(mask = msk))
-endCluster()
 
 # run prediction ----
-fileNm <- paste(loc_outRas, "/", model_run_name ,".tif", sep = "")
+fileNm <- paste(loc_outRas, "/", model_run_name ,"._full.tif", sep = "")
 
 # outRas <- predictRF(envStack, rf.full, progress="text", index=2, na.rm=TRUE, type="prob", filename=fileNm, format = "GTiff", overwrite=TRUE)
 # use parallel processing if packages installed
@@ -72,3 +68,7 @@ if (all(c("snow","parallel") %in% installed.packages())) {
   outRas <- predict(object=envStack, model=rf.full, type = "prob", index=2,
                     filename=fileNm, format = "GTiff", overwrite=TRUE)
 }
+
+# mask for karst region
+msk <- raster("D:/SDM/Tobacco/other_spatial/raster/surfacekarst_mask_3km.tif")
+mask(outRas, mask = msk, filename=paste0(loc_outRas, "/", model_run_name, ".tif"), format = "GTiff", overwrite=TRUE)
