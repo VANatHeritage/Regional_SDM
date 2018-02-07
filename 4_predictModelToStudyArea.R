@@ -68,3 +68,7 @@ if (all(c("snow","parallel") %in% installed.packages())) {
   outRas <- predict(object=envStack, model=rf.full, type = "prob", index=2,
                     filename=fileNm, format = "GTiff", overwrite=TRUE)
 }
+
+# mask for shore region
+msk <- raster("D:/SDM/Tobacco/env_vars/Tobacco/ccap_1992/cdmix1.tif")
+mask(outRas, mask = msk, filename=paste0(loc_outRas, "/", model_run_name, ".tif"), format = "GTiff", overwrite=TRUE)

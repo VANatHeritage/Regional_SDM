@@ -13,7 +13,7 @@ model_species <- "ammohens"
 # path where you want to save model run scripts
 loc_scripts <- paste0(project_folder, "inputs/species/", model_species ,"/scripts")
 # github branch to download
-branch <- "master"
+branch <- "master_shore"
 
 # this downloads latest scripts from GitHub (you can save this 'get_scripts.R' 
 # file anywhere on your computer, so you don't have to change the path)
@@ -56,7 +56,7 @@ run_SDM(
   loc_spPoly = paste0(project_folder, "inputs/species/", model_species ,"/polygon_data"),
   nm_db_file = paste0(project_folder, "databases/VA_Spp/SDM_VA_Tracking_Modeling.sqlite"),
   loc_bkgPts = paste0(project_folder, "inputs/background/tobacco"), 
-  nm_bkgPts = "tobacco_att",
+  nm_bkgPts = "tobacco_att_shore",
   loc_envVars = paste0(project_folder, "env_vars/Tobacco"),
   loc_otherSpatial = paste0(project_folder, "other_spatial/shp"),
   nm_refBoundaries = "StatesVA",
