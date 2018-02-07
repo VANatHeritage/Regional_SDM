@@ -5,12 +5,15 @@
 library(raster)
 library(rgdal)
 
+rm(list = ls())
 # path where .tif env. var rasters are stored
 pathToRas <- "D:/SDM/Tobacco/env_vars/Tobacco"
 # path to background points shapefile
 pathToPts <- "D:/SDM/Tobacco/inputs/background/tobacco"
 # background points shapefile
 ranPtsFile <- "tobacco_RanPts"
+# optional mask (comment out if not wanted - much faster)
+crop.rast <- raster("D:/SDM/Tobacco/env_vars/Tobacco/ccap_1992/cdmix1.tif")
 
 ## create a stack ----
 setwd(pathToRas)
@@ -33,7 +36,16 @@ gridlist <- as.list(paste(pathToRas,raslist,sep = "/"))
 nm <- substr(raslist,1,nchar(raslist) - 4)
 nm <- unlist(lapply(strsplit(nm, "/", fixed = TRUE), FUN = function(x) {x[length(x)]}))
 names(gridlist) <- nm
-envStack <- stack(gridlist)
+if (exists("crop.rast")) {
+  envStack <- stack()
+  for (i in gridlist) {
+    print(i)
+    r1 <- crop(raster(i), crop.rast)
+    envStack <- addLayer(envStack, r1)
+  }
+} else {
+  envStack <- stack(gridlist)
+}
 
 ## Get random points file ----
 setwd(pathToPts)
@@ -41,16 +53,15 @@ setwd(pathToPts)
 ranPtsFileNoExt <- sub(".shp","",ranPtsFile)
 # Read these files into a list of SpatialPoints dataframes
 shpf <- readOGR(".", layer = ranPtsFileNoExt)[,"stratum"] # we only want one column
-
-## drop current data in dataframe
-#shpf@data <- shpf@data[,c(1,83)]
+shpf <- crop(shpf, envStack) # removes unnecssary points outside raster extent
   
 # Get a list of the codes (this assumes all the input files had '_RanPts.shp' that shall be stripped)
 code_name <- strsplit(ranPtsFile, "_RanPts")[[1]][1]
 
 # do it, write it ----
 x <- extract(envStack, shpf, method="simple", sp=TRUE)
-filename <- paste(code_name, "_att", sep="")
+if (exists("crop.rast")) x <- x[complete.cases(x@data),] # subsets to those not missing data
+filename <- paste(code_name, "_att_shore", sep="")
 writeOGR(x, pathToPts, layer=paste(filename), driver="ESRI Shapefile", overwrite_layer=TRUE)
 
 ## clean up ----
