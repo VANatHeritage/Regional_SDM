@@ -19,7 +19,7 @@ setwd(pathToRas)
 ## create a stack. Note this is using native R rasters
 raslist <- list.files(pattern = ".tif$", recursive = TRUE)
 
-# temporal groups -> take only max year by group
+# temporal groups -> take only max year by variable group
 tv <- list.dirs(recursive = FALSE, full.names = FALSE)
 if (length(tv) > 1) {
   tv_grp <- as.character(do.call(rbind.data.frame, strsplit(tv,"_",fixed = TRUE))[,1])
@@ -50,7 +50,7 @@ code_name <- strsplit(ranPtsFile, "_RanPts")[[1]][1]
 
 # do it, write it ----
 x <- extract(envStack, shpf, method="simple", sp=TRUE)
-x <- x[complete.cases(x@data),] # subsets to those not missing data
+x <- x[complete.cases(x@data[,-1]),] # subsets to those points which do not occur in nodata regions of any of the rasters
 filename <- paste(code_name, "_att_shore", sep="")
 writeOGR(x, pathToPts, layer=paste(filename), driver="ESRI Shapefile", overwrite_layer=TRUE)
 
