@@ -8,7 +8,7 @@
 
 # set project folder and species code for this run
 project_folder <- "D:/SDM/Tobacco"
-model_species <- "laniludo_TEST"
+model_species <- "ammohens"
 
 # path where you want to save model run scripts
 loc_scripts <- paste0(project_folder, "/inputs/species/", model_species ,"/scripts")
@@ -66,8 +66,8 @@ system.time(
   loc_RDataOut = paste0(project_folder, "/outputs/", model_species ,"/rdata"),
   loc_outRas = paste0(project_folder, "/outputs/", model_species ,"/grids"),
   loc_outMetadata = paste0(project_folder, "/outputs/", model_species ,"/metadata"),
-  model_comments = "Testing systematic presence sampling/PA exclusion 3000m. Also removed canopy 2001 variables.",
-  metaData_comments = "Testing systematic presence sampling/PA exclusion 3000m. Also removed canopy 2001 variables.",
+  model_comments = "Updated sp. occurrences.",
+  metaData_comments = "",
   modeller = "David Bucklin",
   add_vars = NULL,
   remove_vars = NULL,
@@ -102,7 +102,7 @@ model_species <- "glypmuhl"
 model_rdata <- "speciescode_20170101_123456"
 
 # path where you want to save model run scripts
-loc_scripts <- paste0(project_folder, "inputs/species/", model_species ,"/scripts")
+loc_scripts <- paste0(project_folder, "/inputs/species/", model_species ,"/scripts")
 # github branch to download/update
 branch <- "master"
 
