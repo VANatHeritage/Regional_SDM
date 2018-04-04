@@ -65,7 +65,7 @@ run_SDM(
   loc_RDataOut = paste0(project_folder, "outputs/", model_species ,"/rdata"),
   loc_outRas = paste0(project_folder, "outputs/", model_species ,"/grids"),
   loc_outMetadata = paste0(project_folder, "outputs/", model_species ,"/metadata"),
-  model_comments = "Updated sp. occurrences.",
+  model_comments = "Updated species occurrences.",
   metaData_comments = "",
   modeller = "David Bucklin",
   add_vars = NULL,

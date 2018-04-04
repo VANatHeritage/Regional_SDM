@@ -46,7 +46,7 @@ rm(rs,rs1)
 envStack <- stack(fullL)
 
 # run prediction ----
-fileNm <- paste(loc_outRas, "/", model_run_name ,"._full.tif", sep = "")
+fileNm <- paste(loc_outRas, "/", model_run_name ,"_full.tif", sep = "")
 
 # outRas <- predictRF(envStack, rf.full, progress="text", index=2, na.rm=TRUE, type="prob", filename=fileNm, format = "GTiff", overwrite=TRUE)
 # use parallel processing if packages installed
