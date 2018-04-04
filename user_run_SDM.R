@@ -8,12 +8,12 @@
 
 # set project folder and species code for this run
 project_folder <- "D:/SDM/Tobacco/"
-model_species <- "ammohens"
+model_species <- "pseuthom"
 
 # path where you want to save model run scripts
 loc_scripts <- paste0(project_folder, "inputs/species/", model_species ,"/scripts")
 # github branch to download
-branch <- "master"
+branch <- "master_karst"
 
 # this downloads latest scripts from GitHub (you can save this 'get_scripts.R' 
 # file anywhere on your computer, so you don't have to change the path)
@@ -56,7 +56,7 @@ run_SDM(
   loc_spPoly = paste0(project_folder, "inputs/species/", model_species ,"/polygon_data"),
   nm_db_file = paste0(project_folder, "databases/VA_Spp/SDM_VA_Tracking_Modeling.sqlite"),
   loc_bkgPts = paste0(project_folder, "inputs/background/tobacco"), 
-  nm_bkgPts = "tobacco_att",
+  nm_bkgPts = "tobacco_att_karst",
   loc_envVars = paste0(project_folder, "env_vars/Tobacco"),
   loc_otherSpatial = paste0(project_folder, "other_spatial/shp"),
   nm_refBoundaries = "StatesVA",
@@ -69,7 +69,7 @@ run_SDM(
   metaData_comments = "",
   modeller = "David Bucklin",
   add_vars = NULL,
-  remove_vars = NULL,
+  remove_vars = c("impsur1", "impsur10", "impsur100", "nlcdopn1", "nlcdopn10", "nlcdopn100"),
   prompt = FALSE
 )
 
