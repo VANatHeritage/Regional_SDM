@@ -17,6 +17,7 @@
 run_SDM <- function(
   loc_scripts, 
   loc_spPoly,
+  nm_spPoly,
   nm_db_file,
   loc_bkgPts, 
   nm_bkgPts,
@@ -63,6 +64,7 @@ run_SDM <- function(
     fn_args <- list(
       loc_scripts = loc_scripts, 
       loc_spPoly = loc_spPoly,
+      nm_spPoly = nm_spPoly,
       nm_db_file = nm_db_file,
       loc_bkgPts = loc_bkgPts, 
       nm_bkgPts = nm_bkgPts,
@@ -106,7 +108,7 @@ run_SDM <- function(
                 "foreign","randomForest","DBI","knitr","RColorBrewer","rasterVis","xtable")
   miss.pack <- req.pack[!req.pack %in% names(installed.packages()[,1])]
   if (length(miss.pack) > 0) {
-    stop("Need to install the following package(s) before running this function: ", paste(miss.pack, collapse = ", "))
+    stop("Need to install the following package(s) before running this function: ", paste(miss.pack, collapse = ", "), ". Run script helper/pkg_check.R to download/update.")
   }
   
   # steps to run

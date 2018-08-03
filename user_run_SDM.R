@@ -7,28 +7,29 @@
 # which are used for new modeling runs
 
 # set project folder and species code for this run
-project_folder <- "D:/SDM/Tobacco/"
-model_species <- "ammohens"
+project_folder <- "D:/SDM/Tobacco"
+model_species <- "bombaffi"
 
 # path where you want to save model run scripts
-loc_scripts <- paste0(project_folder, "inputs/species/", model_species ,"/scripts")
+loc_scripts <- paste0(project_folder, "/inputs/species/", model_species ,"/scripts")
 # github branch to download
 branch <- "master_shore"
 
 # this downloads latest scripts from GitHub (you can save this 'get_scripts.R' 
 # file anywhere on your computer, so you don't have to change the path)
-source("E:/git/Regional_SDM/get_scripts.R", local = TRUE)
+source("E:/git/Regional_SDM/helper/get_scripts.R", local = TRUE)
 # NOTE any messages, and download/place scripts manually if necessary
 
 # manually set loc_scripts path here if get_scripts fails
 loc_scripts <- script_store
+loc_scripts <- "E:/git/Regional_SDM"
 
 # remove everything but necessary variables
 rm(list = ls(all.names = TRUE)[!ls(all.names = TRUE) %in% c("project_folder","model_species","loc_scripts")])
 
 # set wd and load function
 setwd(loc_scripts)
-source("run_SDM.R")
+source("helper/run_SDM.R")
 
 ##############
 # End step 1 #
@@ -54,6 +55,7 @@ run_SDM(
   begin_step = "1",
   loc_scripts = loc_scripts, 
   loc_spPoly = paste0(project_folder, "inputs/species/", model_species ,"/polygon_data"),
+  nm_spPoly = "bombaffi_after2005",
   nm_db_file = paste0(project_folder, "databases/VA_Spp/SDM_VA_Tracking_Modeling.sqlite"),
   loc_bkgPts = paste0(project_folder, "inputs/background/tobacco"), 
   nm_bkgPts = "tobacco_att_shore",
@@ -61,12 +63,12 @@ run_SDM(
   loc_otherSpatial = paste0(project_folder, "other_spatial/shp"),
   nm_refBoundaries = "StatesVA",
   nm_studyAreaExtent = "sdmVA_pred_20170131",
-  loc_spPts = paste0(project_folder, "inputs/species/", model_species ,"/point_data"),
-  loc_RDataOut = paste0(project_folder, "outputs/", model_species ,"/rdata"),
-  loc_outRas = paste0(project_folder, "outputs/", model_species ,"/grids"),
-  loc_outMetadata = paste0(project_folder, "outputs/", model_species ,"/metadata"),
-  model_comments = "Updated sp. occurrences.",
-  metaData_comments = "",
+  loc_spPts = paste0(project_folder, "/inputs/species/", model_species ,"/point_data"),
+  loc_RDataOut = paste0(project_folder, "/outputs/", model_species ,"/rdata"),
+  loc_outRas = paste0(project_folder, "/outputs/", model_species ,"/grids"),
+  loc_outMetadata = paste0(project_folder, "/outputs/", model_species ,"/metadata"),
+  model_comments = "Updated sp. occurrences, using only post-2005 records.",
+  metaData_comments = "Only includes records from 2006 or later.",
   modeller = "David Bucklin",
   add_vars = NULL,
   remove_vars = NULL,
@@ -95,17 +97,19 @@ run_SDM(
 # that was specified for the original model run. 
 
 # set project folder and species code for this run
-project_folder <- "D:/SDM/Tobacco/"
+project_folder <- "D:/SDM/Tobacco"
 model_species <- "glypmuhl"
 # set model rdata, if starting at step 4 or later
-# model_rdata <- "speciescode_20170101_123456"
+model_rdata <- "speciescode_20170101_123456"
 
 # path where you want to save model run scripts
-loc_scripts <- paste0(project_folder, "inputs/species/", model_species ,"/scripts")
+loc_scripts <- paste0(project_folder, "/inputs/species/", model_species ,"/scripts")
+# github branch to download/update
+branch <- "master"
 
 # this downloads latest scripts from GitHub (you can save the 'get_scripts.R' 
 # file anywhere on your computer, so you don't have to change the path)
-source("E:/git/Regional_SDM/get_scripts.R", local = TRUE)
+source("E:/git/Regional_SDM/helper/get_scripts.R", local = TRUE)
 # NOTE any messages, and download/place scripts manually if necessary
 
 # manually set loc_scripts here if running step 1 seperately from step 2 (on different computers)
@@ -116,13 +120,13 @@ rm(list = ls(all.names = TRUE)[!ls(all.names = TRUE) %in% c("project_folder","mo
 
 # set wd and load function
 setwd(loc_scripts)
-source("run_SDM.R")
+source("helper/run_SDM.R")
 
 # UNCOMMENT BELOW
 run_SDM(
   # loc_scripts = loc_scripts, # if script location is changed, make sure this is set
   begin_step = "5",
-  loc_RDataOut = paste0(project_folder, "outputs/", model_species ,"/rdata"),
+  loc_RDataOut = paste0(project_folder, "/outputs/", model_species ,"/rdata"),
   model_rdata = model_rdata, # need to provide this if picking up after step 3, otherwise leave it out
   # model_comments = "Updated model comment.",
   # metaData_comments = "Updated metadata comment.",
