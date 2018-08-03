@@ -8,7 +8,7 @@
 
 # set project folder and species code for this run
 project_folder <- "D:/SDM/Tobacco"
-model_species <- "ammohens"
+model_species <- "bombaffi"
 
 # path where you want to save model run scripts
 loc_scripts <- paste0(project_folder, "/inputs/species/", model_species ,"/scripts")
@@ -22,6 +22,7 @@ source("E:/git/Regional_SDM/helper/get_scripts.R", local = TRUE)
 
 # manually set loc_scripts path here if get_scripts fails
 loc_scripts <- script_store
+loc_scripts <- "E:/git/Regional_SDM"
 
 # remove everything but necessary variables
 rm(list = ls(all.names = TRUE)[!ls(all.names = TRUE) %in% c("project_folder","model_species","loc_scripts")])
@@ -55,6 +56,7 @@ system.time(
   begin_step = "1",
   loc_scripts = loc_scripts, 
   loc_spPoly = paste0(project_folder, "/inputs/species/", model_species ,"/polygon_data"),
+  nm_spPoly = "bombaffi_after2005",
   nm_db_file = paste0(project_folder, "/databases/VA_Spp/SDM_VA_Tracking_Modeling.sqlite"),
   loc_bkgPts = paste0(project_folder, "/inputs/background/tobacco"), 
   nm_bkgPts = "tobacco_att",

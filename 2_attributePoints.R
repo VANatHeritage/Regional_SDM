@@ -35,13 +35,11 @@ names(gridlist) <- nm
 # Set working directory to the random points location
 setwd(loc_spPts)
 
-ranPtsFiles <- list.files(pattern = ".RanPts.shp$")
-ranPtsFiles
-#look at the output and choose which shapefile you want to run
-#enter its location in the list (first = 1, second = 2, etc)
-n <- 1
+# load data, QC ----
+shpName <- strsplit(nm_spPoly,"\\.")[[1]][[1]]
+sppCode <- shpName
 
-ranPtsFilesNoExt <- sub(".shp","",ranPtsFiles[n])
+ranPtsFilesNoExt <- paste0(sppCode, "_RanPts")
 shpf <- readOGR(".", layer = ranPtsFilesNoExt)
 
 #get projection info for later
