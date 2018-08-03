@@ -17,6 +17,7 @@
 run_SDM <- function(
   loc_scripts, 
   loc_spPoly,
+  nm_spPoly,
   nm_db_file,
   loc_bkgPts, 
   nm_bkgPts,
@@ -63,6 +64,7 @@ run_SDM <- function(
     fn_args <- list(
       loc_scripts = loc_scripts, 
       loc_spPoly = loc_spPoly,
+      nm_spPoly = nm_spPoly,
       nm_db_file = nm_db_file,
       loc_bkgPts = loc_bkgPts, 
       nm_bkgPts = nm_bkgPts,
@@ -85,15 +87,15 @@ run_SDM <- function(
   if (!hasArg(model_comments)) model_comments <- fn_args$model_comments
   if (!hasArg(metaData_comments)) metaData_comments <- fn_args$metaData_comments
   if (!is.null(add_vars)) {
-    model_comments <- paste0(model_comments, " Non-standard variables (", paste(add_vars, collapse = ", "), ") were included in this model.")
+    model_comments <- paste0("Non-standard variables (", paste(add_vars, collapse = ", "), ") were included in this model. ", model_comments)
     fn_args$model_comments <- model_comments
-    metaData_comments <- paste0(metaData_comments, " Non-standard variables (", paste(add_vars, collapse = ", "), ") were included in this model.")
+    metaData_comments <- paste0("Non-standard variables (", paste(add_vars, collapse = ", "), ") were included in this model. ", metaData_comments)
     fn_args$metaData_comments <- metaData_comments
   }
   if (!is.null(remove_vars)) {
-    model_comments <- paste0(model_comments, " The standard variables (", paste(remove_vars, collapse = ", "), ") were excluded from this model.")
+    model_comments <- paste0("The standard variables (", paste(remove_vars, collapse = ", "), ") were excluded from this model. ", model_comments)
     fn_args$model_comments <- model_comments
-    metaData_comments <- paste0(metaData_comments, " The standard variables (", paste(remove_vars, collapse = ", "), ") were excluded from this model.")
+    metaData_comments <- paste0("The standard variables (", paste(remove_vars, collapse = ", "), ") were excluded from this model.", metaData_comments)
     fn_args$metaData_comments <- metaData_comments
   }
   # save fn_args
@@ -106,7 +108,7 @@ run_SDM <- function(
                 "foreign","randomForest","DBI","knitr","RColorBrewer","rasterVis","xtable")
   miss.pack <- req.pack[!req.pack %in% names(installed.packages()[,1])]
   if (length(miss.pack) > 0) {
-    stop("Need to install the following package(s) before running this function: ", paste(miss.pack, collapse = ", "))
+    stop("Need to install the following package(s) before running this function: ", paste(miss.pack, collapse = ", "), ". Run script helper/pkg_check.R to download/update.")
   }
   
   # steps to run

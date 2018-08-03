@@ -11,6 +11,7 @@ project_folder <- "D:/SDM/VA_non-TRRC"
 project_folder1 <- "D:/SDM/Tobacco" # base folder for env vars
 model_species <- "pseucave"
 
+
 # path where you want to save model run scripts
 loc_scripts <- paste0(project_folder, "/inputs/species/", model_species ,"/scripts")
 # github branch to download
@@ -18,18 +19,19 @@ branch <- "master_karst"
 
 # this downloads latest scripts from GitHub (you can save this 'get_scripts.R' 
 # file anywhere on your computer, so you don't have to change the path)
-source("E:/git/Regional_SDM/get_scripts.R", local = TRUE)
+source("E:/git/Regional_SDM/helper/get_scripts.R", local = TRUE)
 # NOTE any messages, and download/place scripts manually if necessary
 
 # manually set loc_scripts path here if get_scripts fails
 loc_scripts <- script_store
+loc_scripts <- "E:/git/Regional_SDM"
 
 # remove everything but necessary variables
 rm(list = ls(all.names = TRUE)[!ls(all.names = TRUE) %in% c("project_folder","project_folder1","model_species","loc_scripts")])
 
 # set wd and load function
 setwd(loc_scripts)
-source("run_SDM.R")
+source("helper/run_SDM.R")
 
 ##############
 # End step 1 #
@@ -55,6 +57,7 @@ run_SDM(
   begin_step = "1",
   loc_scripts = loc_scripts, 
   loc_spPoly = paste0(project_folder, "/inputs/species/", model_species ,"/polygon_data"),
+  nm_spPoly = "pseucave",
   nm_db_file = paste0(project_folder, "/databases/SDM_tracking_db.sqlite"),
   loc_bkgPts = paste0(project_folder1, "/inputs/background/tobacco"), 
   nm_bkgPts = "tobacco_att_karst",
@@ -102,12 +105,14 @@ model_species <- "pseuthom"
 model_rdata <- "pseuthom_20180404_154515"
 
 # path where you want to save model run scripts
-loc_scripts <- paste0(project_folder, "inputs/species/", model_species ,"/scripts")
+loc_scripts <- paste0(project_folder, "/inputs/species/", model_species ,"/scripts")
+# github branch to download/update
+branch <- "master"
 
 branch <- "master_karst"
 # this downloads latest scripts from GitHub (you can save the 'get_scripts.R' 
 # file anywhere on your computer, so you don't have to change the path)
-source("E:/git/Regional_SDM/get_scripts.R", local = TRUE)
+source("E:/git/Regional_SDM/helper/get_scripts.R", local = TRUE)
 # NOTE any messages, and download/place scripts manually if necessary
 
 # manually set loc_scripts here if running step 1 seperately from step 2 (on different computers)
@@ -118,7 +123,7 @@ rm(list = ls(all.names = TRUE)[!ls(all.names = TRUE) %in% c("project_folder","mo
 
 # set wd and load function
 setwd(loc_scripts)
-source("run_SDM.R")
+source("helper/run_SDM.R")
 
 # UNCOMMENT BELOW
 run_SDM(
